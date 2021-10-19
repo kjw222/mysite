@@ -29,7 +29,7 @@ public class DeleteAction implements Action {
 		
 			System.out.println(gbVo);
 		
-		MvcUtil.forward("guestbook/list", request, response);
+		MvcUtil.redirect(request.getContextPath() + "/guestbook?a=list", request, response);
 
 	}
 

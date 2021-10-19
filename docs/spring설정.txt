@@ -1,0 +1,9 @@
+1. 
+
+
+
+
+
+3. properties > java build path 확인, 없다면 target runtime 에서 tomcat 추가.
+4. pom.xml 프로젝트 폼, 모듈 폼 모두 설정.
+5. 
