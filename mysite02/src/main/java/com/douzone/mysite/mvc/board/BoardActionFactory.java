@@ -23,18 +23,21 @@ public class BoardActionFactory extends ActionFactory {
 		}else if("modify".equals(actionName)) {
 			action = new ModifyAction();
 		}else if("rewriteform".equals(actionName)) {
-			System.out.println("BoardActionFactory ("+actionName+") in");
 			action = new ReWriteFormAction();
-			System.out.println("BoardActionFactory ("+actionName+") out");
 		}else if("rewrite".equals(actionName)) {
 			System.out.println("BoardActionFactory ("+actionName+") in");
 			action = new ReWriteAction();
 			System.out.println("BoardActionFactory ("+actionName+") out");
+		}else if("delete".equals(actionName)) {
+			System.out.println("BoardActionFactory ("+actionName+") in");
+			action = new DeleteAction();
+			System.out.println("BoardActionFactory ("+actionName+") out");
 		}else if("search".equals(actionName)) {
 			
-			//action = new SearchAction();	
+			action = new ListAction();	
 			
 		}else {
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 			action = new ListAction();
 		}
 		

@@ -75,12 +75,12 @@
 
 					<c:forEach var="count" begin="${boardStartNo}" end="${boardEndNo}">
 						<tr>
-							<td style="text-align: left">${count}</td>
+							<td>${count}</td>
 
 							<c:choose>
 								<c:when test="${(boardList[count-1].depth) eq 0}">
 									<td
-										style="text-align: left ; padding:${(boardList[count-1].depth)*20}px">
+										style="text-align: left ; padding:${(boardList[count-1].depth)*15}px">
 										<a
 										href="${pageContext.servletContext.contextPath }/board?a=view&no=${ boardList[count-1].no}">
 											${boardList[count-1].title} </a>
@@ -88,9 +88,9 @@
 								</c:when>
 								<c:otherwise>
 									<td
-										style="text-align: left ; padding:${(boardList[count-1].depth)*20}px">
+										style="text-align: left ; padding:${(boardList[count-1].depth)*15}px">
 										<a
-										href="${pageContext.servletContext.contextPath }/board?a=view&no=${ boardList[count-1].no}">
+										href="${pageContext.servletContext.contextPath }/board?a=delete&no=${ boardList[count-1].no}">
 											<img id="reply"
 											src="${pageContext.request.contextPath }/assets/images/reply.png">${boardList[count-1].title}
 									</a>
@@ -105,9 +105,10 @@
 							<td>${boardList[count-1].userNo}</td>
 							<td>${boardList[count-1].hit}</td>
 							<td>${boardList[count-1].regDate}</td>
-							<td><a
-								href="${pageContext.servletContext.contextPath }/board?a=view&no=${ boardList[count-1].no}"
-								class="del">삭제</a></td>
+							<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${ boardList[count-1].no}" class="del">
+							
+							
+								</a></td>
 						</tr>
 					</c:forEach>
 

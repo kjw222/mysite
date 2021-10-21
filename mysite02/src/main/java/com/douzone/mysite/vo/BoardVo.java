@@ -10,13 +10,15 @@ public class BoardVo {
 	private long orderNo;
 	private long depth;
 	private long userNo;
+	private long del;
+	private String name;
 	
 	
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", regDate="
-				+ regDate + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo
-				+ "]";
+				+ regDate + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", userNo=" + userNo+", del="+del
+				+ ", "+name+"]";
 	}
 	public long getNo() {
 		return no;
@@ -72,5 +74,16 @@ public class BoardVo {
 	public void setUserNo(long userNo) {
 		this.userNo = userNo;
 	} 
-
+	public long getDel() {
+		return del;
+	}
+	public void setDel(long del) {
+		this.del = del;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 }

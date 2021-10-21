@@ -19,12 +19,38 @@ public class ListAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
 		List<BoardVo> boardVo = null;
-		
-		
 		HttpSession session = request.getSession();
-		boardVo = new BoardDao().findAll();
+	
+		long p = Long.parseLong(request.getParameter("p")); //선택 페이지
+		long startBoard = (p*10)-9;	//리스트가 시작되는 보드 count 숫자
 		
+		long boardLength = new BoardDao().countBoardNum(); //db에 저장된 보드 갯수
+		
+		long startPageNum = ((int)(p/5))*5+1; //페이징 스타트 페이지.
+		long endPageNum = ((int)(p/5))*5+5;
+		long maxPageNum = ((int)(boardLength/10)+((boardLength%10)==0?0:1));
+		
+		if(endPageNum > maxPageNum) {endPageNum=maxPageNum;}
+		
+		
+		String kwd = request.getParameter("kwd");
+		if(kwd == null) {
+		boardVo = new BoardDao().findPage(startBoard);
+		}else {boardVo = new BoardDao().Search(kwd);}
+		request.setAttribute("p", p);
+		request.setAttribute("startBoard", startBoard);
+		request.setAttribute("maxPageNum", maxPageNum);
+		request.setAttribute("maxBoardNum", boardLength);
+		request.setAttribute("startPageNum", startPageNum);
+		request.setAttribute("endPageNum", endPageNum);
 		request.setAttribute("boardList", boardVo);
+		
+		
+		
+		System.out.println("p : "+p+" startBoard : "+startBoard+" boardLength : "+ boardLength+" startPageNum : "+startPageNum+" endPageNum : "+endPageNum+" maxPageNum : "+maxPageNum);
+		
+		System.out.println("boardList : "+boardVo);
+		
 		
 		MvcUtil.forward("board/list", request, response);
 
