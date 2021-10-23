@@ -234,10 +234,10 @@ public class BoardDao {
 				"select a.no, a.title, a.contents, a.hit, a.reg_date, a.group_no, a.order_no, a.depth,a.user_no , a.del, b.name "
 				+ "from board a, user b "
 				+ "where a.user_no = b.no "
-				+ "order by  group_no desc, order_no asc,depth asc "
+				+ "order by  group_no desc, order_no asc, depth asc "
 				+ "limit ?, 10" ;
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setLong(1, p);
+			pstmt.setLong(1, (p-1));
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -297,7 +297,7 @@ public class BoardDao {
 	
 	
 	
-	public List<BoardVo> Search(String kwd) {
+	public List<BoardVo> Search(String kwd, long p) {
 		List<BoardVo> list = new ArrayList<>();
 		
 		Connection conn = null;
@@ -311,10 +311,12 @@ public class BoardDao {
 				"select a.no, a.title, a.contents, a.hit, a.reg_date, a.group_no, a.order_no, a.depth,a.user_no , a.del, b.name  "
 				+ "from board a, user b  "
 				+ "where a.user_no = b.no  "
-				+ "and a.title like '%?%' "
-				+ "order by  group_no desc, order_no asc,depth asc";
+				+ "and a.title like ? "
+				+ "order by  group_no desc, order_no asc,depth asc "
+				+  "limit ?, 10" ;
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, kwd);
+			pstmt.setString(1, "%" + kwd + "%");
+			pstmt.setLong(2, p);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -483,7 +485,7 @@ public class BoardDao {
 		
 	}
 
-		public void updateOrderNo(long no) {
+		public void updateOrderNo(long groupNo, long orderNo) {
 		
 		boolean result = false;
 
@@ -498,8 +500,8 @@ public class BoardDao {
 					+ "	where group_no = ? and order_no>= ?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(1, no);
-			pstmt.setLong(2, no);
+			pstmt.setLong(1, groupNo);
+			pstmt.setLong(2, orderNo);
 			
 			int count = pstmt.executeUpdate();
 			result = count == 1;

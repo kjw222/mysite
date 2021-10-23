@@ -26,17 +26,18 @@ public class ListAction implements Action {
 		
 		long boardLength = new BoardDao().countBoardNum(); //db에 저장된 보드 갯수
 		
-		long startPageNum = ((int)(p/5))*5+1; //페이징 스타트 페이지.
-		long endPageNum = ((int)(p/5))*5+5;
+		long startPageNum = ((int)(((p-1)/5)))*5+1; //페이징 스타트 페이지.
+		long endPageNum = startPageNum+4;
 		long maxPageNum = ((int)(boardLength/10)+((boardLength%10)==0?0:1));
 		
 		if(endPageNum > maxPageNum) {endPageNum=maxPageNum;}
 		
-		
+		System.out.println("p : "+p+" startBoard : "+startBoard+" boardLength : "+ boardLength+" startPageNum : "+startPageNum+" endPageNum : "+endPageNum+" maxPageNum : "+maxPageNum);
 		String kwd = request.getParameter("kwd");
+		System.out.println("kwd : "+kwd);
 		if(kwd == null) {
 		boardVo = new BoardDao().findPage(startBoard);
-		}else {boardVo = new BoardDao().Search(kwd);}
+		}else {boardVo = new BoardDao().Search(kwd, p);}
 		request.setAttribute("p", p);
 		request.setAttribute("startBoard", startBoard);
 		request.setAttribute("maxPageNum", maxPageNum);

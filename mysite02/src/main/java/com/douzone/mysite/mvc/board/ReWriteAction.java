@@ -30,22 +30,22 @@ public class ReWriteAction implements Action {
 		
 		//이전 글(답글이 달릴 글)의 정보
 		Long groupNo = boardVo.getGroupNo();
-		Long orderNo = boardVo.getOrderNo();
+		Long orderNo = (boardVo.getOrderNo()+1);
 		Long depth = boardVo.getDepth();
 		Long userNo = userVo.getNo();
-		
-		
+		System.out.println("그룹 넘버, 오더넘버 : "+groupNo+", "+orderNo);
+		new BoardDao().updateOrderNo(groupNo, orderNo); //같은 그룹에서 자신이 가질 orderNo와 수가 같거나 큰 것들의 orderNo의 수를 1씩 증가시킨다. 
 		
 		BoardVo vo = new BoardVo();
 		
 		vo.setTitle(title);
 		vo.setContents(contents);
 		vo.setGroupNo((groupNo));
-		vo.setOrderNo(orderNo+1);
+		vo.setOrderNo(orderNo);
 		vo.setDepth(depth+1);
 		vo.setUserNo(userNo);
 		
-		new BoardDao().updateOrderNo(vo.getOrderNo());		//같은 그룹에서 자신이 가질 orderNo와 수가 같거나 큰 것들의 orderNo의 수를 1씩 증가시킨다. 
+		
 		new BoardDao().insert(vo);
 		
 		System.out.println("rewriteaction : "+ vo);

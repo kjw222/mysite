@@ -3,9 +3,34 @@
 
 <mapper namespace="guestbook">
 
+	<insert id="insert" parameterType="guestbookvo">  <!-- configuration.xml 파일에 alias로 설정해놧음. 자세한 주소는 거기서 확인가능. -->
+	<![CDATA[
+	 	insert into guestbook values (null, #{name}, #{password}, #{message}, now())
+	]]>
+		<selectKey keyProperty="no" resultType="Long" order="AFTER">
+			<![CDATA[
+			 	select last_insert_id()
+			 	select seq.curval from dual
+			]]>
+			
+		</selectKey>
+	</insert>
 
 
 
-<!-- 이 부분에 sql 구문을 입력해주면 된다. -->
+	<delete id="delete" parameterType="guestbookvo">  <!-- configuration.xml 파일에 alias로 설정해놧음. 자세한 주소는 거기서 확인가능. -->
+	<![CDATA[
+	 	delete from guestbook where no=#{no } and password=#{password})
+	]]>
+	</delete>
+	
+	
+	
+	<select id="findAll" resultType="guestbookvo">  
+	<![CDATA[
+	 	select no, name, date_format(reg_date, '%Y/%m/%d %H:%i:%s'), message  from guestbook  order by reg_date
+	]]>
+	</select>
+	<!-- 이 부분에 sql 구문을 입력해주면 된다. -->
 
 </mapper>
